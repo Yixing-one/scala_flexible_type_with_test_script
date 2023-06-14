@@ -21,14 +21,15 @@ class CommunityBuildTestA:
   @Test def scalatest = projects.scalatest.run()
   @Test def scalatestplusTestNG = projects.scalatestplusTestNG.run()
   // 'Sciss/Lucre' dependencies:
-  // @Test def scissEqual      = projects.scissEqual     .run()
-  // @Test def scissFingerTree = projects.scissFingerTree.run()
-  // @Test def scissLog        = projects.scissLog       .run()
-  // @Test def scissModel      = projects.scissModel     .run()
-  // @Test def scissNumbers    = projects.scissNumbers   .run()
-  // @Test def scissSerial     = projects.scissSerial    .run()
-  // @Test def scissAsyncFile  = projects.scissAsyncFile .run()
-  // @Test def scissSpan       = projects.scissSpan      .run()
+  @Test def scissEqual      = projects.scissEqual     .run()
+  @Test def scissFingerTree = projects.scissFingerTree.run()
+  @Test def scissLog        = projects.scissLog       .run()
+  @Test def scissModel      = projects.scissModel     .run()
+  @Test def scissNumbers    = projects.scissNumbers   .run()
+  @Test def scissSerial     = projects.scissSerial    .run()
+  @Test def scissSerialscissSerialscissSerial  = projects.scissAsyncFile .run()
+  @Test def scissSpan       = projects.scissSpan      .run()
+
   @Test def scissLucre = projects.scissLucre.run()
   @Test def zio = projects.zio.run()
 end CommunityBuildTestA

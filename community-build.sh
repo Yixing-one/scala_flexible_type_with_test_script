@@ -6,70 +6,84 @@
 
 #include all the community projects that need to be built in the following project_list
 project_list=(
-            "intent"
-            "scalacheck"
-            "scalatest"
-            "scalatestplus-scalacheck"
-            "scalatestplus-junit"
-            "scalatestplus-testng"
-            "scala-xml"
-            "scalap"
-            "betterfiles"
-            "ScalaPB"
-            "minitest"
-            "fastparse"
-            "stdLib213"
-            "shapeless"
-            "xml-interpolator"
-            "effpi"
-            "sconfig"
-            "zio"
-            "munit"
-            "scodec-bits"
-            "scodec"
-            "scala-parser-combinators"
-            "dotty-cps-async"
-            "scalaz"
-            "endpoints4s"
-            "cats-effect-3"
-            "scala-parallel-collections"
-            "scala-collection-compat"
-            "scala-java8-compat"
-            "verify"
-            "discipline"
-            "discipline-munit"
-            "discipline-specs2"
-            "simulacrum-scalafix"
-            "cats"
-            "cats-mtl"
-            "coop"
-            "Equal"
-            "FingerTree"
-            "Log"
-            "Model"
-            "Numbers"
-            "Serial"
-            "AsyncFile"
-            "Span"
-            "scala-stm"
-            "Lucre"
-            "izumi-reflect"
-            "perspective"
-            "akka"
-            "Monocle"
-            "protoquill"
-            "onnx-scala"
-            "play-json"
-            "munit-cats-effect"
-            "scalacheck-effect"
-            "fs2"
-            "libretto"
-            "jackson-module-scala"
-            "specs2"
-            "spire"
-            "http4s"
-            "parboiled2"
-        )
+        #testA
+        “izumiReflect”
+        “scalaSTM”
+        “Scalatest”
+        “scalatestplusTestNG”
+        “scissEqual”
+        “scissFingerTree”
+        “scissLog”
+        “scissModel”
+        “scissNumbers”
+        “scissSerial”
+        “scissSerialscissSerialscissSerial”
+        “scissSpan”
+        “scissLucre”
+        “Zio”
+
+        #testB
+        “cats”
+        “catsEffect3”
+        “catsMtl”
+        “coop”
+        “discipline”
+        “disciplineMunit”
+        “disciplineSpecs2”
+        “fs2”
+        “monocle”
+        “munit”
+        “munitCatsEffect”
+        “perspective”
+        “scalacheckEffect”
+        “scodec”
+        “scodecBits”
+        “simulacrumScalafixAnnotations”
+        “spire”
+        “http4s”
+        
+        #testC
+        “akk”
+        “betterfiles”
+        “cask”
+        “effpi”
+        “endpoints4s”
+        “fansi”
+        “fastparse”
+        “geny”
+        “intent”
+        “jacksonModuleScala”
+        “libretto”
+        “minitest”
+        “onnxScala”
+        “oslib”
+        “parboiled2”
+        “playJson”
+        “pprint”
+        “protoquill”
+        “requests”
+        “scalacheck”
+        “scalaCollectionCompat”
+        “scalaJava8Compat”
+        “scalap”
+        “scalaParallelCollections”
+        “scalaParserCombinators”
+        “scalaPB”
+        “scalatestplusScalacheck”
+        “scalaXml”
+        “scalaz”
+        “scas”
+        “sconfig”
+        “shapeless”
+        “sourcecode”
+        “specs2”
+        “stdLib213”
+        “ujson”
+        “upickle”
+        “utest”
+        “verify”
+        “xmlInterpolator”
+       )
 
 #set output to be the name of the directory that project.log and result_summary.log will be stored
 output=output_original
@@ -78,7 +92,7 @@ output=output_original
 rm -r "${output}"
 mkdir "${output}"
 
-error=error_original
+error=error_no_change
 #remove the error directory if it already exits and make a new one
 rm -r "${error}"
 mkdir "${error}"
@@ -92,13 +106,18 @@ for project in "${project_list[@]}"
 do
     #build the community project
     rm "${output}/${project}.log"
+    echo -e "Currently building project: ${project}" 
     sbt "community-build/testOnly -- *${project}" &> "${output}/${project}.log"
+
     if grep -r 'SUCCESS' "${output}/${project}.log"; then
         project_success+=("${project}")
-    else
+    else if  grep -r 'FAILURE' "${output}/${project}.log"; then
         project_fail+=("${project}")
+    else 
+        echo -e "Cannot run project: ${project}" 
     fi
-    sed -n '/[STARTING/,/DONE RUNNING]/p' "${output}/${project}.log" | grep '^\[error' &> "error_original/${project}.error"
+
+    sed -n '/[STARTING/,/DONE RUNNING]/p' "${output}/${project}.log" | grep '^\[error' &> "error_no_change/${project}.error"
 done
 
 # generate output/result_summary.log which include information in project_success
