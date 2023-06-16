@@ -7,82 +7,80 @@
 #include all the community projects that need to be built in the following project_list
 project_list=(
         #testA
-        “izumiReflect”
-        “scalaSTM”
-        “Scalatest”
-        “scalatestplusTestNG”
-        “scissEqual”
-        “scissFingerTree”
-        “scissLog”
-        “scissModel”
-        “scissNumbers”
-        “scissSerial”
-        “scissSerialscissSerialscissSerial”
-        “scissSpan”
-        “scissLucre”
-        “Zio”
-
+        "izumiReflect"
+        "scalaSTM"
+        "Scalatest"
+        "scalatestplusTestNG"
+        "scissEqual"
+        "scissFingerTree"
+        "scissLog"
+        "scissModel"
+        "scissNumbers"
+        "scissSerial"
+        "scissSerialscissSerialscissSerial"
+        "scissSpan"
+        "scissLucre"
+        "Zio"
         #testB
-        “cats”
-        “catsEffect3”
-        “catsMtl”
-        “coop”
-        “discipline”
-        “disciplineMunit”
-        “disciplineSpecs2”
-        “fs2”
-        “monocle”
-        “munit”
-        “munitCatsEffect”
-        “perspective”
-        “scalacheckEffect”
-        “scodec”
-        “scodecBits”
-        “simulacrumScalafixAnnotations”
-        “spire”
-        “http4s”
-        
+        "cats"
+        "catsEffect3"
+        "catsMtl"
+        "coop"
+        "discipline"
+        "disciplineMunit"
+        "disciplineSpecs2"
+        "fs2"
+        "monocle"
+        "munit"
+        "munitCatsEffect"
+        "perspective"
+        "scalacheckEffect"
+        "scodec"
+        "scodecBits"
+        "simulacrumScalafixAnnotations"
+        "spire"
+        "http4s"
         #testC
-        “akk”
-        “betterfiles”
-        “cask”
-        “effpi”
-        “endpoints4s”
-        “fansi”
-        “fastparse”
-        “geny”
-        “intent”
-        “jacksonModuleScala”
-        “libretto”
-        “minitest”
-        “onnxScala”
-        “oslib”
-        “parboiled2”
-        “playJson”
-        “pprint”
-        “protoquill”
-        “requests”
-        “scalacheck”
-        “scalaCollectionCompat”
-        “scalaJava8Compat”
-        “scalap”
-        “scalaParallelCollections”
-        “scalaParserCombinators”
-        “scalaPB”
-        “scalatestplusScalacheck”
-        “scalaXml”
-        “scalaz”
-        “scas”
-        “sconfig”
-        “shapeless”
-        “sourcecode”
-        “specs2”
-        “stdLib213”
-        “ujson”
-        “upickle”
-        “utest”
-        “verify”
-        “xmlInterpolator”
+        "akk"
+        "betterfiles"
+        "cask"
+        "effpi"
+        "endpoints4s"
+        "fansi"
+        "fastparse"
+        "geny"
+        "intent"
+        "jacksonModuleScala"
+        "libretto"
+        "minitest"
+        "onnxScala"
+        "oslib"
+        "parboiled2"
+        "playJson"
+        "pprint"
+        "protoquill"
+        "requests"
+        "scalacheck"
+        "scalaCollectionCompat"
+        "scalaJava8Compat"
+        "scalap"
+        "scalaParallelCollections"
+        "scalaParserCombinators"
+        "scalaPB"
+        "scalatestplusScalacheck"
+        "scalaXml"
+        "scalaz"
+        "scas"
+        "sconfig"
+        "shapeless"
+        "sourcecode"
+        "specs2"
+        "stdLib213"
+        "ujson"
+        "upickle"
+        "utest"
+        "verify"
+        "xmlInterpolator"
        )
 
 #set output to be the name of the directory that project.log and result_summary.log will be stored
@@ -107,16 +105,15 @@ do
     #build the community project
     rm "${output}/${project}.log"
     echo -e "Currently building project: ${project}" 
+    echo "sbt \"community-build/testOnly -- *${project}\""
     sbt "community-build/testOnly -- *${project}" &> "${output}/${project}.log"
-
     if grep -r 'SUCCESS' "${output}/${project}.log"; then
         project_success+=("${project}")
-    else if  grep -r 'FAILURE' "${output}/${project}.log"; then
+    elif  grep -r 'FAILURE' "${output}/${project}.log"; then
         project_fail+=("${project}")
-    else 
+    else
         echo -e "Cannot run project: ${project}" 
     fi
-
     sed -n '/[STARTING/,/DONE RUNNING]/p' "${output}/${project}.log" | grep '^\[error' &> "error_no_change/${project}.error"
 done
 
