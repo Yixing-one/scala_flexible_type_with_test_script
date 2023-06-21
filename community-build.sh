@@ -5,22 +5,15 @@
 #       (4) output/result_summary.log contain two lists of project names; one for those that are built successfully, and one for those that are not
 
 #include all the community projects that need to be built in the following project_list
+# Name of all community project that are built
 project_list=(
         #testA
         "izumiReflect"
         "scalaSTM"
-        "Scalatest"
+        "scalatest"
         "scalatestplusTestNG"
-        "scissEqual"
-        "scissFingerTree"
-        "scissLog"
-        "scissModel"
-        "scissNumbers"
-        "scissSerial"
-        "scissSerialscissSerialscissSerial"
-        "scissSpan"
         "scissLucre"
-        "Zio"
+        "zio"
         #testB
         "cats"
         "catsEffect3"
@@ -41,7 +34,7 @@ project_list=(
         "spire"
         "http4s"
         #testC
-        "akk"
+        "akka"
         "betterfiles"
         "cask"
         "effpi"
@@ -81,10 +74,10 @@ project_list=(
         "utest"
         "verify"
         "xmlInterpolator"
-       )
+        )
 
 #set output to be the name of the directory that project.log and result_summary.log will be stored
-output=output_original
+output=output_no_change
 
 #remove the output directory if it already exits and make a new one
 rm -r "${output}"
